@@ -2,4 +2,4 @@
 
 ### Assignments
 
--[Assignment 1: RMarkdown Homework](BDA-503-W1.html)
+[Assignment 1: RMarkdown Homework](BDA-503-W1.html)
