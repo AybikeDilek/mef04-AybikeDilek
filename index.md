@@ -2,5 +2,6 @@
 
 ### Assignments
 
-[Assignment 1: RMarkdown Homework](BDA-503-W1.html) \n
+[Assignment 1: RMarkdown Homework](BDA-503-W1.html)
+
 [Week3: Bonus](Week3.html)
