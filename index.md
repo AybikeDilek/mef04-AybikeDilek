@@ -6,5 +6,5 @@
 
 [Week 3: In-Class Exercise](Week3_In_Class_Exercise.html)
 
-[Assignment Assignment: Electricity Market Prices] (Week_3_Electricity_-Market_Analysis.html)
+[Assignment Assignment: Electricity Market Prices](Week_3_Electricity_-Market_Analysis.html)
 
