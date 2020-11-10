@@ -8,3 +8,4 @@
 
 [Assignment Assignment: Electricity Market Prices](Week_3_Electricity_-Market_Analysis.html)
 
+
