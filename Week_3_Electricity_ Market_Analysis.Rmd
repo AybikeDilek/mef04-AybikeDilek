@@ -4,7 +4,20 @@ author: "Aybike Dilek"
 date: "10 11 2020"
 output: html_document
 ---
-
+```{css, echo = FALSE}
+h1.title{
+  color:#d3501d;
+}
+h2{
+  color:#084a4a;
+}
+h3{
+  color:#084a4a;
+}
+h4{
+  color:#084a4a;
+}
+```
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
