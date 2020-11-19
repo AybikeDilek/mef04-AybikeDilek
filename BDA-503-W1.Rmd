@@ -2,16 +2,14 @@
 title: "BDA-503-W1"
 author: "Aybike Dilek"
 date: "*18/10/2020*"
-output:
-  html_document:
-    toc: true
-    toc_float: true
-    theme: united
-    highlight: pygments
+output: html_document:
 ---
 ```{css, echo = FALSE}
 h1.title{
   color:#d3501d;
+}
+h2{
+  color:#084a4a;
 }
 h3{
   color:#084a4a;
