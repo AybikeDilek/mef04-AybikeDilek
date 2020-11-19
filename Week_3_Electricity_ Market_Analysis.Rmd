@@ -45,8 +45,7 @@ After preprocessing, mutated_energy_ data was summarised. The outlier was detect
 
 ```{r, include=TRUE}
 summary(mutated_energy_data )
-boxplot(mutated_energy_data$MCP,xlab = "MCP")
-boxplot(mutated_energy_data$SMP,xlab="SMP")
+boxplot(mutated_energy_data$SMP, mutated_energy_data$MCP, col=c("#d3501d","#008080"),names =c("SMP","MCP"))
 ```
 
 Pearson Correlation was calculated. The correlation between the two variables MCP and SMP was 0.684. Besides, the outlier (MCP=430, SMP=2000) was seen again on the left bottom graph.
@@ -63,15 +62,15 @@ bar_df_weekdays <- mutated_energy_data %>% group_by(WeekDays) %>% summarise(Medi
 bar_df_weekdays$WeekDays <- factor(bar_df_weekdays$WeekDays,levels = c("Pazartesi", "Salı", "Çarşamba", "Perşembe","Cuma","Cumartesi", "Pazar"))  
 
 SMP_bar <- ggplot(bar_df_weekdays, aes(x=WeekDays, y=Median_SMP)) +
-  geom_bar(stat="identity", position="dodge") +
+  geom_bar(stat="identity", position="dodge",fill="#d3501d", colour="black") +
   labs(x = "WeekDays",
        y = "Median_SMP")
 MCP_bar <- ggplot(bar_df_weekdays, aes(x=WeekDays, y=Median_MCP)) + 
-  geom_bar(stat="identity", position="dodge") +
+  geom_bar(stat="identity", position="dodge",fill="#008080", colour="black") +
   labs(x = "WeekDays",
        y = "Median_MCP")
 Diff_bar <- ggplot(bar_df_weekdays, aes(x=WeekDays, y=Median_Diff_SMP_MCP)) +
-  geom_bar(stat="identity", position="dodge") +
+  geom_bar(stat="identity", position="dodge",fill="#f5f5dc", colour="black") +
   labs(x = "WeekDays",
        y = "Median_Diff_SMP_MCP")
 grid.arrange(SMP_bar,MCP_bar,Diff_bar)
@@ -90,15 +89,15 @@ bar_df_hours <- mutated_energy_data %>% group_by(Hours) %>% summarise(Median_MCP
 bar_df_hours$Hours <- factor(bar_df_hours$Hours,levels = c(0:23))  
 
 SMP_bar_hour <- ggplot(bar_df_hours, aes(x=Hours, y=Median_SMP)) +
-  geom_bar(stat="identity", position="dodge") +
+  geom_bar(stat="identity", position="dodge",fill="#d3501d", colour="black") +
   labs(x = "Hours",
        y = "Median_SMP")
 MCP_bar_hour <- ggplot(bar_df_hours, aes(x=Hours, y=Median_MCP)) +
-geom_bar(stat="identity", position="dodge") +
+geom_bar(stat="identity", position="dodge",fill="#008080", colour="black") +
   labs(x = "Hours",
        y = "Median_MCP")
 Diff_bar_hour <- ggplot(bar_df_hours, aes(x=Hours, y=Median_Diff_SMP_MCP)) +
-  geom_bar(stat="identity", position="dodge") +
+  geom_bar(stat="identity", position="dodge",fill="#f5f5dc", colour="black") +
   labs(x = "Hours",
        y = "Median_Diff_SMP_MPC")
 grid.arrange(SMP_bar_hour,MCP_bar_hour,Diff_bar_hour)
