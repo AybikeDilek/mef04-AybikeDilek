@@ -14,6 +14,12 @@ h2{
 h3{
   color:#084a4a;
 }
+h4{
+  color:#084a4a;
+}
+h5{
+  color:#084a4a;
+}
 ```
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
