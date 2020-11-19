@@ -521,7 +521,7 @@ grid.arrange(SMP_bar,MCP_bar,Diff_bar)</code></pre>
 <pre class="r"><code>bar_df_hours$Hours &lt;- factor(bar_df_hours$Hours,levels = c(0:23))  
 
 SMP_bar_hour &lt;- ggplot(bar_df_hours, aes(x=Hours, y=Median_SMP)) +
-  geom_bar(stat=&quot;identity&quot;, position=&quot;dodge&quot;) +
+  geom_bar(stat=&quot;identity&quot;, position=&quot;dodge&quot;, fill=&quot;#d3501d&quot;, colour=&quot;black&quot;) +
   labs(x = &quot;Hours&quot;,
        y = &quot;Median_SMP&quot;)
 MCP_bar_hour &lt;- ggplot(bar_df_hours, aes(x=Hours, y=Median_MCP)) +
