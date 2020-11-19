@@ -1,10 +1,22 @@
 ---
 title: "BDA-503-W1"
 author: "Aybike Dilek"
-date: "18 10 2020"
-output: html_document
+date: "*18/10/2020*"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: united
+    highlight: pygments
 ---
-
+```{css, echo = FALSE}
+h1.title{
+  color:#d3501d;
+}
+h3{
+  color:#084a4a;
+}
+```
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
