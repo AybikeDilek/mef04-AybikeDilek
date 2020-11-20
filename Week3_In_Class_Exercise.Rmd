@@ -1,8 +1,15 @@
 ---
 title: "Week3 In-Class Exercise"
 author: "Aybike Dilek"
-date: "04 11 2020"
-output: html_document
+date: "*04/11/2020*"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    theme: united
+    highlight: pygments
+  
 ---
 ```{css, echo = FALSE}
 h1.title{
@@ -32,6 +39,7 @@ library(scales)
 
 The data set contains various data on the housing sector in Istanbul. Data are available from 2010 to 2020 on a monthly basis.
 
+### Preprocessing
 
 ```{r}
 data <- read_excel("C:/Users/Aybike/Desktop/data.xlsx")
@@ -42,22 +50,42 @@ summary(data)
 sub_data<-data %>% select(Tarih,TP_AKONUTSAT4_T40,TP_DISKONSAT_ISTANBUL) %>% mutate(Gün=as.Date(paste0(Tarih,"-01"))) %>% mutate(Yıl=year(Gün)) 
 sum_data<- sub_data %>% group_by(Yıl) %>% summarise(Toplam_TP_AKONUTSAT4_T40 =  sum(TP_AKONUTSAT4_T40),Toplam_TP_DISKONSAT_ISTANBUL=sum(TP_DISKONSAT_ISTANBUL))
 sum_data
-tsp <- ggplot(data = sum_data, aes(x = Yıl, y = Toplam_TP_AKONUTSAT4_T40))+ geom_line(color = "#00AFBB", size = 1) + xlim(2013,2019)
-tsp
-
 ```
 
+### Data Analysis with R  
 
-I observed that second-hand home sales significantly increased in 2019. I think that it could be due to decreasing of affordability.
+```{r}
+tsp <- ggplot(data = sum_data, aes(x = Yıl, y = Toplam_TP_AKONUTSAT4_T40))+geom_line(color="#d3501d",size=1)+
+labs(title = "Toplam_TP_AKONUTSAT4_T40 vs Yıl")+
+xlim(2013,2019)
+tsp
+```
+
+*Toplam_TP_AKONUTSAT4_T40 = Sum of second-hand house sales in ISTANBUL*
+
+*Yıl = Year*
+
+I observed that second-hand house sales significantly increased in 2019. I think that it could be due to decreasing of affordability.
 
 * 2020 is an incomplete year so it is excluded.
 
 ```{r}
-tsp <- ggplot(data = sum_data, aes(x = Yıl, y = Toplam_TP_DISKONSAT_ISTANBUL))+ geom_line(color = "#00AFBB", size = 1) + xlim(2013,2019)
+tsp <- ggplot(data = sum_data, aes(x = Yıl, y = Toplam_TP_DISKONSAT_ISTANBUL))+ geom_line(color = "#00AFBB", size = 1) + xlim(2013,2019)+labs(title = "Toplam_TP_DISKONSAT_ISTANBUL vs Yıl")
 tsp
-
 ```
+
+*Toplam_TP_DISKONSAT_ISTANBUL= Sum of house sales to foreigners in ISTANBUL*
+
+*Yıl = Year*
 
 I observed that home sales to foreigners increased sharply after 2017. I think that it could be due to appreciation of Dollar currency against Turkish Lira.
 
 * 2020 is an incomplete year so it is excluded.
+
+### References
+
+* [Data Source-1](http://www.tuik.gov.tr/)
+
+* [Data Source-2](http://www.tcmb.gov.tr/)
+
+*You may click* [here](https://pjournal.github.io/mef04-AybikeDilek/) *to reach other items of my progress journal.* 
