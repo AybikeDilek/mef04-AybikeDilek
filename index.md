@@ -8,4 +8,6 @@
 
 [Assignment: Electricity Market Prices](Week_3_Electricity_-Market_Analysis.html)
 
+[Group’s Progress Journal Page](https://pjournal.github.io/mef04g-a-k-a-r/)
+
 
