@@ -6,7 +6,7 @@
 
 [Week 3: In-Class Exercise](Week3-In-Class-Exercise.html) 
 
-[Assignment: Electricity Market Prices](Assignment_Electricity_Market_Analysis.html)
+[Assignment: Electricity Market Prices](Assignment_Electricity_Market_Analysis.html) 
 
 [Group’s Progress Journal Page](https://pjournal.github.io/mef04g-a-k-a-r/)
 
