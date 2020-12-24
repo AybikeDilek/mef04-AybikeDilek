@@ -4,9 +4,9 @@
 
 [Assignment 1: RMarkdown Homework](BDA-503-W1.html)
 
-[Assignment: Electricity Market Prices](Assignment_Electricity_Market_Analysis.html) 
+[Assignment 2: Electricity Market Prices](Assignment_Electricity_Market_Analysis.html) 
 
-[Assignment: SPAM_Detection_with_ML_Algorithms](SPAM-Detection-with-ML-Algorithms.html)
+[Assignment 3: SPAM_Detection_with_ML_Algorithms](SPAM-Detection-with-ML-Algorithms.html)
 
 ### In-Class Exercise:
 
