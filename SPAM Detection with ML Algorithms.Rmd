@@ -1,0 +1,257 @@
+---
+title: "SPAM Detection with ML Algorithms"
+author: "Aybike Dilek"
+date: "*19/12/2020*"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    theme: united
+    highlight: pygments
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(rpart)
+library(tree)
+library(rpart.plot)
+library(dplyr)
+library(rattle)
+```
+
+```{css, echo = FALSE}
+h1.title{
+  color:#d3501d;
+}
+h1{
+  color:#084a4a;
+}
+
+h2{
+  color:#084a4a;
+}
+h3{
+  color:#084a4a;
+}
+h4{
+  color:#084a4a;
+}
+```
+
+# Objective
+
+The objective of this project is to build a CART model to detect spam emails using UCI Spambase data.
+
+# Preprocessing
+
+The dataset is imported as spambase_csv and it is examined with the glimpse.The *class* column is examined in detail. Then, the dataset is split into train and test set. **%25** is test  and **75%** for the train.
+
+```{r,warning=FALSE,message=FALSE}
+spambase_csv <- read_csv("C:/Users/Aybike/Desktop/spambase_csv.csv")
+
+glimpse(spambase_csv)
+summary(spambase_csv$class)
+
+set.seed(58) #set seed to obtain the same sample in each run of the model.
+spambase_csv = spambase_csv %>% filter(complete.cases(.)) %>%
+  mutate(train_test = ifelse(runif(nrow(.)) < 0.25,"test","train"))
+
+spam_train <- spambase_csv %>% filter(train_test == "train") %>% select(-train_test)
+
+spam_test <- spambase_csv %>% filter(train_test=="test") %>% select(-train_test)
+```
+
+# CART Modelling
+
+The R package **rpart** is used for building a model to predict that, an e-mail is a spam or ham. The output of the model (y) is either 1 or 0, therefore the method="class" argument is used in the rpart model. 
+
+```{r,warning=FALSE,message=FALSE}
+fit <- rpart(class ~ .,
+             method="class", data=spam_train)
+```
+
+The Classification Tree of the train set is plotted with **rpart.plot**. 
+
+```{r,warning=FALSE,message=FALSE}
+fancyRpartPlot(fit,main = "Classification Tree of Training Set\n")
+```
+
+First, the data is split in two: fewer char_freq_%24 (less than 0.056 char_freq_%24, to the left of the tree) and more char_freq_%24 (more than 0.056 char_freq_%24, to the right). The left group makes up **76%** of the original sample, versus **24%** for the other one. As an example, the explanation of Node 7 is if char_freq_%24 is greater than or equal to 0.056 and word_freq_hp is less than 0.41, then the probability of being spam (1) is **0.93**. 
+
+
+# CART Analysis
+
+After fitting the model, it is run with the train and the test set.
+
+## In Sample Analysis
+
+Firstly, the model is run with the train set. The prediction values are obtained. The probability outputs are changed using if-else statements. Then the data is grouped according to the accuracy as TRUE-FALSE. Finally, it is summarized as the count and percentage of accuracy.
+
+```{r,warning=FALSE,message=FALSE}
+spam_predict_in_sample <- as_tibble(predict(fit))
+names(spam_predict_in_sample)[1] <- "Ham"
+names(spam_predict_in_sample)[2] <- "Spam"
+
+print(head(spam_predict_in_sample))
+
+in_sample_prediction <-
+  cbind(
+    spam_predict_in_sample %>%
+      transmute(spam_predict = ifelse(Spam >= 0.5,1,0)),
+    spam_train %>%
+      transmute(spam_actual = ifelse(class == 1,1,0))
+  ) %>%
+  mutate(correct_class = (spam_predict == spam_actual)) %>%
+  group_by(correct_class) %>%
+  summarise(count=n(),percentage=round(n()/nrow(.),4))
+
+print(in_sample_prediction)
+```
+The in sample accuracy of the model is obtained as **90,2%**.
+
+## Out of Sample Analysis
+
+In this part, the model is run with the test set. The same procedures are applied as In Sample Analysis.
+
+```{r,warning=FALSE,message=FALSE}
+spam_predict_in_test_set <- as_tibble(predict(fit,newdata=spam_test))
+names(spam_predict_in_test_set)[1] <- "Ham"
+names(spam_predict_in_test_set)[2] <- "Spam"
+
+print(spam_predict_in_test_set)
+
+out_of_sample_prediction <-
+  cbind(
+    spam_predict_in_test_set%>%
+      transmute(spam_predict = ifelse(Spam >= 0.5,1,0)),
+    spam_test %>%
+      transmute(spam_actual = ifelse(class == 1,1,0))
+  ) %>%
+  mutate(correct_class = (spam_predict == spam_actual)) %>%
+  group_by(correct_class) %>%
+  summarise(count=n(),percentage=round(n()/nrow(.),4))
+
+print(out_of_sample_prediction)
+```
+
+The out of sample accuracy of the model is obtained as **90,4%**.
+
+# Logistic Regression Modelling
+
+
+Logistic regression is a algorithm, which is used to predict a binary outcome based on a set of independent variables. In this model, the binary outcome is **class** and independent variables are the remaining columns.
+
+Logit and Probit are the two links type of the logistic regression model. They were built using **glm**.
+
+- Logit could be used when the data have a *standard logistic distribution of errors*.
+- Probit could be used when the data have a *normal distribution of errors*.
+
+[For additional information about the Logit and Probit](https://liberalarts.utexas.edu/prc/_files/cs/Fall2013_Moore_Logistic_Probit_Regression.pdf)
+
+```{r,warning=FALSE,message=FALSE}
+spam_logit_model <- glm(class ~ ., data=spam_train,family=binomial(link = "logit"))
+spam_probit_model <- glm(class ~ ., data=spam_train,family=binomial(link = "probit"))
+```
+
+In Sample and Out of Sample analysis are done for both Logistic Regression models respectively. 
+
+## Logit-Logistic Regression Analysis
+
+```{r,warning=FALSE,message=FALSE}
+spam_logit_in_sample <- predict(spam_logit_model,type="response")
+
+spam_logit_in_sample_prediction <-
+  data.frame(in_sample=(spam_logit_in_sample >= 0.5)*1,
+             actual=(spam_train$class == 1)*1) %>%
+  mutate(correct_class= (in_sample == actual)) %>%
+  group_by(correct_class) %>%
+  summarise(count=n(),percentage=round(n()/nrow(.),4))
+
+
+print(spam_logit_in_sample_prediction)
+
+spam_logit_out_of_sample <- predict(spam_logit_model,newdata=spam_test,type="response")
+
+spam_logit_out_of_sample_prediction <-
+  data.frame(out_of_sample=(spam_logit_out_of_sample >= 0.5)*1,
+             actual=(spam_test$class == 1)*1) %>%
+  mutate(correct_class= (out_of_sample == actual)) %>%
+  group_by(correct_class) %>%
+  summarise(count=n(),percentage=round(n()/nrow(.),4))
+
+print(spam_logit_out_of_sample_prediction)
+```
+
+## Probit-Logistic Regression Analysis
+
+```{r,warning=FALSE,message=FALSE}
+spam_probit_in_sample <- predict(spam_probit_model,type="response")
+
+spam_probit_in_sample_prediction <-
+  data.frame(in_sample=(spam_probit_in_sample >= 0.5)*1,
+             actual=(spam_train$class == 1)*1) %>%
+  mutate(correct_class= (in_sample == actual)) %>%
+  group_by(correct_class) %>%
+  summarise(count=n(),percentage=round(n()/nrow(.),4))
+
+
+print(spam_probit_in_sample_prediction)
+
+
+spam_probit_out_of_sample <- predict(spam_probit_model,newdata=spam_test,type="response")
+
+spam_probit_out_of_sample_prediction <-
+  data.frame(out_of_sample=(spam_probit_out_of_sample >= 0.5)*1,
+             actual=(spam_test$class == 1)*1) %>%
+  mutate(correct_class= (out_of_sample == actual)) %>%
+  group_by(correct_class) %>%
+  summarise(count=n(),percentage=n()/nrow(.))
+
+
+print(spam_probit_out_of_sample_prediction)
+```
+
+# Comparison of Models
+
+The outputs of the three models are shown together. 
+
+```{r,warning=FALSE,message=FALSE}
+complete_benchmark <- data.frame(
+  model = c("CART","Logistic Reg. - Logit","Logistic Reg. - Probit"),
+  in_sample_accuracy = c(
+    in_sample_prediction %>% filter(correct_class) %>% transmute(round(percentage,4)) %>% unlist(),
+    spam_logit_in_sample_prediction %>% filter(correct_class) %>% transmute(round(percentage,4)) %>% unlist(),
+    spam_probit_in_sample_prediction %>% filter(correct_class) %>% transmute(round(percentage,4)) %>% unlist()
+  ),
+  out_of_sample_accuracy = c(
+    out_of_sample_prediction %>% filter(correct_class) %>% transmute(round(percentage,4)) %>% unlist(),
+    spam_logit_out_of_sample_prediction %>% filter(correct_class) %>% transmute(round(percentage,4)) %>% unlist(),
+    spam_probit_out_of_sample_prediction %>% filter(correct_class) %>% transmute(round(percentage,4)) %>% unlist()
+  )
+  
+)
+
+print(complete_benchmark)
+```
+
+As a result, **Logistic Reg. - Logit** model has the highest model accuracy in both in_sample and out_of_sample respectively **92,74%**, **93,09%**.
+
+# References
+
+- [Data Source - UCI Database Portal](http://archive.ics.uci.edu/ml/machine-learning-databases/spambase/)
+
+- [Classification & Regression Trees](http://www.di.fc.ul.pt/~jpn/r/tree/tree.html)
+
+- [Statistical Models in R: Part 2](https://mef-bda503.github.io/archive/fall17/files/intro_to_ml_2.html)
+
+- [Decision trees and extensions](http://www.gcoqueret.com/files/S5_Trees.nb.html#14_variable_importance)
+
+- [What is Logistic Regression?](https://careerfoundry.com/en/blog/data-analytics/what-is-logistic-regression/#2-what-is-logistic-regression)
+
+*You may click* [here](https://pjournal.github.io/mef04-AybikeDilek/) *to reach other items of my progress journal.*
+
+
+
