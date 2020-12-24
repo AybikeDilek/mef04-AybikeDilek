@@ -8,6 +8,8 @@
 
 [Assignment: Electricity Market Prices](Assignment_Electricity_Market_Analysis.html) 
 
+[Assignment: SPAM_Detection_with_ML_Algorithms](SPAM-Detection-with-ML-Algorithms.html)
+
 [Group’s Progress Journal Page](https://pjournal.github.io/mef04g-a-k-a-r/)
 
 
