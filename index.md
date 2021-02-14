@@ -4,10 +4,13 @@
 
 Some R related summaries were shared.
 - [About Me & R](BDA-503-W1.html)
+
 Electricity prices in September 2020, Turkey was analyzed.
 - [Electricity Market Price Analysis](Assignment_Electricity_Market_Analysis.html) 
+
 A CART model was built to detect spam emails using UCI Spambase data. It was compared with the other models. 
 - [SPAM_Detection_with_ML_Algorithms](SPAM-Detection-with-ML-Algorithms.html)
+
 The real estate market, Istanbul between 2010-2020 was analyzed monthly. 
 - [Real Estate Market Analysis](Week3-In-Class-Exercise.html) 
 
