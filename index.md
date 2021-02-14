@@ -19,6 +19,9 @@ The real estate market, Istanbul between 2010-2020 was analyzed monthly.
 The various exploratory analyses and basic inferential analyses were done using House Sales, King County, USA dataset. 
 - [House Sales Analysis](House%20Sales%20%20Anaylsis%20in%20King%20County.html)
 
+The exploratory analyses were conducted to provide outcomes using the Korean Triage dataset.
+
+
 ### Group Page:
 
 The traffic announcements of İstanbul between 2018 and 2020 were analyzed. Besides, Istanbul Metropolitan Municipality bicycle services ISBIKE was analyzed.
