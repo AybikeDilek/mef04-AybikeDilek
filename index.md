@@ -20,6 +20,7 @@ The various exploratory analyses and basic inferential analyses were done using 
 - [House Sales Analysis](House%20Sales%20%20Anaylsis%20in%20King%20County.html)
 
 The exploratory analyses were conducted to provide outcomes using the Korean Triage dataset.
+- [Korean Triage Analysis](Korean_Triage_Analysis.html)
 
 
 ### Group Page:
