@@ -2,7 +2,7 @@
 
 ### Assignments:
 
-[Assignment 1: RMarkdown Homework](BDA-503-W1.html)
+[About Me & R](BDA-503-W1.html)
 
 [Assignment 2: Electricity Market Prices](Assignment_Electricity_Market_Analysis.html) 
 
