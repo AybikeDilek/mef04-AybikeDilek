@@ -16,6 +16,9 @@ A CART model was built to detect spam emails using UCI Spambase data. It was com
 
 ### Python: 
 
+The exploratory analyses were conducted and churn prediction was done with different machine learning algorithms.
+- [Telecom Churn Prediction](Churn_Prediction.html)
+
 The various exploratory analyses and basic inferential analyses were done using House Sales, King County, USA dataset. 
 - [House Sales Analysis](House%20Sales%20%20Anaylsis%20in%20King%20County.html)
 
